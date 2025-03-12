@@ -1,0 +1,93 @@
+package lab;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class GradebookTester {
+
+   private GradeBook gradeBook1;
+   private GradeBook gradeBook2;
+
+   @BeforeEach
+   public void setUp() {
+      // Initialize two GradeBook objects with a capacity of 5 each
+      gradeBook1 = new GradeBook(5);
+      gradeBook2 = new GradeBook(5);
+
+      // Add random scores to gradeBook1
+      gradeBook1.addScore(85.0);
+      gradeBook1.addScore(90.5);
+      gradeBook1.addScore(78.3);
+
+      // Add random scores to gradeBook2
+      gradeBook2.addScore(92.0);
+      gradeBook2.addScore(88.5);
+   }
+
+   @AfterEach
+   public void tearDown() {
+      // Set both GradeBook objects to null for cleanup
+      gradeBook1 = null;
+      gradeBook2 = null;
+   }
+
+   // Test addScore method
+   @Test
+   public void testAddScore() {
+      // Check that the scores are correctly added
+      gradeBook1.addScore(95.5);
+      assertTrue(gradeBook1.toString().contains("95.5"), "The score 95.5 should be added to gradeBook1.");
+      
+      // Check the size of the scores array
+      assertEquals(4, gradeBook1.getScoreSize(), "The score size should be 4 after adding 4 scores.");
+   }
+
+   // Test sum method
+   @Test
+   public void testSum() {
+      // Add more scores to gradeBook1
+      gradeBook1.addScore(80.0);
+      
+      // Calculate expected sum: 85.0 + 90.5 + 78.3 + 80.0 = 333.8
+      assertEquals(333.8, gradeBook1.sum(), 0.01, "The sum should be 333.8.");
+   }
+
+   // Test minimum method
+   @Test
+   public void testMinimum() {
+      // Add more scores to gradeBook2
+      gradeBook2.addScore(70.0);
+      
+      // Calculate expected minimum: 70.0 (since 70.0 is the smallest)
+      assertEquals(70.0, gradeBook2.minimum(), "The minimum score should be 70.0.");
+   }
+
+   // Test finalScore method
+   @Test
+   public void testFinalScore() {
+      // Add more scores to gradeBook1
+      gradeBook1.addScore(100.0);
+      
+      // Calculate the final score: Sum - minimum = (85.0 + 90.5 + 78.3 + 80.0 + 100.0) - 78.3 = 357.5
+      assertEquals(357.5, gradeBook1.finalScore(), 0.01, "The final score should be 357.5.");
+   }
+
+   // Test if the finalScore is 0 when there are no scores
+   @Test
+   public void testFinalScoreEmpty() {
+      GradeBook emptyGradebook = new GradeBook(5);
+      assertEquals(0.0, emptyGradebook.finalScore(), "The final score should be 0 if there are no scores.");
+   }
+}
